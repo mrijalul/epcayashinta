@@ -14,7 +14,8 @@ class MatapelajaranController extends Controller
      */
     public function index()
     {
-        //
+        $data = Matapelajaran::orderBy('id', 'desc')->get();
+        return view('matpel.index', compact('data'));
     }
 
     /**
@@ -35,7 +36,16 @@ class MatapelajaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'matpel' => 'required|unique:matapelajarans'
+		]);
+		
+		$data = new Matapelajaran;
+		$data->matpel = $request->matpel;
+		$data->slug = str_slug($request->matpel);
+		$data->save();
+
+		return redirect()->back()->with('success','Mata Pelajaran '.$request->matpel.' Berhasil Diinputkan.');
     }
 
     /**
