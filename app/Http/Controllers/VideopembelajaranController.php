@@ -2,84 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Videopembelajaran;
+use App\Videopembelajaran as VideoPembelajaranDB;
+use App\Matapelajaran as MataPelajaranDB;
 use Illuminate\Http\Request;
 
 class VideopembelajaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+	public function index()
+	{
+		$data 	= VideoPembelajaranDB::orderBy('id', 'desc')->get();
+		$mapel 	= MataPelajaranDB::orderBy('id', 'desc')->get();
+		return view('video_pembelajaran.index', compact('data','mapel'));
+	}
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function create()
+	{
+		//
+	}
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Videopembelajaran  $videopembelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Videopembelajaran $videopembelajaran)
-    {
-        //
-    }
+	public function store(Request $request)
+	{
+		$request->validate([
+			'nama_video' 	=> 'required|unique:videopembelajarans',
+			'file_video'	=> 'required|mimes:mp4,m4a,mkv|max:2048',
+		]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Videopembelajaran  $videopembelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Videopembelajaran $videopembelajaran)
-    {
-        //
-    }
+		// file upload
+		$file_video 	= $request->file('file_video');
+		$rename_file 	= 'modul_' . uniqid() . '_' . str_slug($file_video->getClientOriginalName()) . '.' .$file_video->getClientOriginalExtension();
+		$file_video->move(public_path('video'), $rename_file);
+		
+		$form_data = array(
+            'matapelajaran_id' 	=> $request->matapelajaran_id,
+			'nama_video' 		=> $request->nama_video,
+			'file_video' 		=> $rename_file,
+		);
+		VideoPembelajaranDB::create($form_data);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Videopembelajaran  $videopembelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Videopembelajaran $videopembelajaran)
-    {
-        //
-    }
+		return redirect()->back()->with('success','Video Pembelajaran '.$request->nama_video.' Berhasil Diinputkan.');
+	}
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Videopembelajaran  $videopembelajaran
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Videopembelajaran $videopembelajaran)
-    {
-        //
-    }
+	public function show(Videopembelajaran $videopembelajaran)
+	{
+		//
+	}
+
+	public function edit(Videopembelajaran $videopembelajaran)
+	{
+		//
+	}
+
+	public function update(Request $request, Videopembelajaran $videopembelajaran)
+	{
+		//
+	}
+
+	public function destroy(Videopembelajaran $videopembelajaran)
+	{
+		//
+	}
 }

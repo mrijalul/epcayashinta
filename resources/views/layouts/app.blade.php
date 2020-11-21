@@ -11,6 +11,7 @@
 	
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+	@stack('styles')
 </head>
 <body>
 	<div id="app" style="background: #7579e7; height: 100%;">
