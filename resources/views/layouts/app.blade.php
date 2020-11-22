@@ -11,6 +11,7 @@
 	
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	@stack('styles')
 </head>
 <body>
@@ -72,10 +73,12 @@
 	</div>
 
 	<!-- Scripts -->
-	<script src="{{ asset('js/jquery-3.5.1.slim.min.js') }}" crossorigin="anonymous"></script>
+	{{-- <script src="{{ asset('js/jquery-3.5.1.slim.min.js') }}" crossorigin="anonymous"></script> --}}
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
 	<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	@stack('scripts')
 </body>
 </html>
