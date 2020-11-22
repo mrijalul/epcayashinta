@@ -15,16 +15,14 @@ class CreateKaskecilsTable extends Migration
 	{
 		Schema::create('kaskecils', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->char('nama', 100)->after('id');
-			$table->integer('userid')->after('nama');
-			$table->integer('hapus')->after('userid');
-			
-			$table->decimal('saldo', 20,2)->after('userid');
+			$table->char('nama', 100)->nullable(true);
+			$table->integer('userid')->nullable(true);
+			$table->decimal('saldo', 20,2)->nullable(true);
 			$table->date('tanggal')->after('saldo')->nullable(true);
-
-			$table->decimal('pengembalianjumlah', 20,2)->after('tanggal')->nullable(true);
-            $table->date('tanggalpengembalian')->after('pengembalianjumlah')->nullable(true);
-            $table->char('keteranganpengembalian', 255)->after('tanggalpengembalian')->nullable(true);
+			$table->decimal('pengembalianjumlah', 20,2)->nullable(true);
+            $table->date('tanggalpengembalian')->nullable(true);
+            $table->char('keteranganpengembalian', 255)->nullable(true);
+			$table->integer('hapus')->nullable(true);
 			$table->timestamps();
 		});
 	}
