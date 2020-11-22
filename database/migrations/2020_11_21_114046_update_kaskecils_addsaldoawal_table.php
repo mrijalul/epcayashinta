@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKaskecilsTable extends Migration
+class UpdateKaskecilsAddsaldoawalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateKaskecilsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kaskecils', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+        Schema::table("kaskecils", function(Blueprint $table){
+            $table->decimal('saldo', 20,2)->after('userid');
+            $table->date('tanggal')->after('saldo')->nullable(true);
         });
     }
 
@@ -26,6 +26,7 @@ class CreateKaskecilsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kaskecils');
+        $table->dropColumn('saldo');
+        $table->dropColumn('tanggal');
     }
 }
