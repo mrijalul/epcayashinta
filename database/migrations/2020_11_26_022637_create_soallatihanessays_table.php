@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVideopembelajaransTable extends Migration
+class CreateSoallatihanessaysTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,10 +13,10 @@ class CreateVideopembelajaransTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('videopembelajarans', function (Blueprint $table) {
+		Schema::create('soallatihanessays', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->string('nama_video')->nullable();
-			$table->string('file_video')->nullable();
+			$table->integer('matapelajaran_id')->nullable();
+			$table->text('pertanyaan')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -28,6 +28,6 @@ class CreateVideopembelajaransTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('videopembelajarans');
+		Schema::dropIfExists('soallatihanessays');
 	}
 }

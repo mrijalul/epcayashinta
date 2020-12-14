@@ -9,7 +9,7 @@
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/hamburgers.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">

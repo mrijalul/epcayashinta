@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVideopembelajaransTable extends Migration
+class AddLinkytbToVideopembelajaranTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,11 +13,8 @@ class CreateVideopembelajaransTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('videopembelajarans', function (Blueprint $table) {
-			$table->bigIncrements('id');
-			$table->string('nama_video')->nullable();
-			$table->string('file_video')->nullable();
-			$table->timestamps();
+		Schema::table('videopembelajarans', function (Blueprint $table) {
+			$table->text('link_ytb')->after('file_video')->nullable();
 		});
 	}
 
@@ -28,6 +25,8 @@ class CreateVideopembelajaransTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('videopembelajarans');
+		Schema::table('videopembelajarans', function (Blueprint $table) {
+			$table->dropColumn('link_ytb');
+		});
 	}
 }

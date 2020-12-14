@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4" style="color: #fff">Modul Pembelajaran</h1>
+	<h1 class="display-4 kathen" style="color: #fff">Materi Pembelajaran</h1>
 </div>
 <div class="row">
 	<div class="col-md-8 blog-main">
 		<div class="card-deck mb-3">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="mb-3 text-center">Tambah Modul Pembelajaran</h4>
+					<h4 class="mb-3 text-center">Tambah Materi Pembelajaran</h4>
 					
 					@if($message = Session::get('success'))
 						<div class="alert alert-primary" role="alert">
@@ -30,23 +30,15 @@
 						@csrf
 						
 						<div class="mb-3">
-							<label for="matapelajaran_id">Mata Pelajaran</label>
-							<select name="matapelajaran_id" id="matapelajaran_id" class="form-control">
-								@foreach ($mapel as $m)
-									<option value="{{ $m->id }}">{{ $m->matpel }}</option>
-								@endforeach
-							</select>
-						</div>
-						<div class="mb-3">
-							<label for="nama_modul">Nama Modul</label>
+							<label for="nama_modul">Nama Materi</label>
 							<input type="text" class="form-control" id="nama_modul" placeholder="" name="nama_modul" required>
 						</div>
 						<div class="mb-3">
-							<label for="file_modul">File Modul (pdf,docs,docx,doc only)</label>
+							<label for="file_modul">File Materi (pdf,docs,docx,doc only) maks 2MB</label>
 							<input type="file" class="form-control" id="file_modul" placeholder="" name="file_modul" required accept=".pdf,.docs,.docx,.doc">
 						</div>
 
-						<button type="submit" class="btn btn-primary mb-3">Submit</button>
+						<button type="submit" class="btn btn-primary mb-3">Kirim Materi</button>
 					</form>
 
 				</div>
@@ -59,10 +51,8 @@
 						<thead>
 							<tr>
 								<th>No.</th>
-								<th>Mata Pelajaran</th>
-								<th>Nama Modul</th>
-								<th>File Modul</th>
-								<th>Aksi</th>
+								<th>Nama Materi</th>
+								<th>File Materi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,10 +62,8 @@
 							@foreach ($data as $modul)
 							<tr>
 								<td>{{ $no++ }}</td>
-								<td>{{ $modul->matapelajaran_id }}</td>
 								<td>{{ $modul->nama_modul }}</td>
-								<td><a href="{{ route('modul-pembelajaran.download',$modul->id) }}" target="_blank" rel="noopener noreferrer">liat modul</a></td>
-								<td>button</td>
+								<td><a href="{{ route('modul-pembelajaran.download',$modul->id) }}" target="_blank" rel="noopener noreferrer">Lihat Materi</a></td>
 							</tr>
 							@endforeach
 						</tbody>

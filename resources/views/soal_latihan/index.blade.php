@@ -2,14 +2,15 @@
 
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4 kathen" style="color: #fff">Mata Pelajaran</h1>
+	<h1 class="display-4 kathen" style="color: #fff">Soal Latihan</h1>
 </div>
 <div class="row">
+
 	<div class="col-md-8 blog-main">
 		<div class="card-deck mb-3">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="mb-3 text-center">Tambah Mata Pelajaran</h4>
+					<h4 class="mb-3 text-center">Materi Soal Latihan</h4>
 					
 					@if($message = Session::get('success'))
 						<div class="alert alert-primary" role="alert">
@@ -25,13 +26,13 @@
 					</div>
 					@endif
 
-					<form action="{{ route('matpel.store') }}" method="post">
+					<form action="{{ route('soal-latihan.store') }}" method="post">
 						@csrf
 						<div class="mb-3">
-							<label for="matpel">Mata Pelajaran</label>
-							<input type="text" class="form-control" id="matpel" placeholder="" name="matpel" required>
+							<label for="matpel">Materi Soal Latihan</label>
+							<input type="text" class="form-control" id="matpel" placeholder="Materi untuk Latihan Soal" name="matpel" required>
 						</div>
-						<button type="submit" class="btn btn-primary mb-3">Submit</button>
+						<button type="submit" class="btn btn-primary mb-3">Lanjut Membuat Soal</button>
 					</form>
 
 				</div>
@@ -66,9 +67,9 @@
 		</div>
 	</div>
 
-	@include('layouts.mainmenu')
+	@include('layouts.mainmenu')	
 
-  </div>
+</div>
 @endsection
 
 @push('scripts')

@@ -5,20 +5,13 @@ namespace App\Http\Controllers;
 use App\Modulpembelajaran as ModulPembelajaranDB;
 use App\Matapelajaran as MataPelajaranDB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ModulpembelajaranController extends Controller
 {
 	public function index()
 	{
 		$data 	= ModulPembelajaranDB::orderBy('id', 'desc')->get();
-		$mapel 	= MataPelajaranDB::orderBy('id', 'desc')->get();
-		return view('modul_pembelajaran.index', compact('data','mapel'));
-	}
-
-	public function create()
-	{
-		//
+		return view('modul_pembelajaran.index', compact('data'));
 	}
 
 	public function store(Request $request)
@@ -30,25 +23,22 @@ class ModulpembelajaranController extends Controller
 
 		// file upload
 		$file_modul 	= $request->file('file_modul');
-		$rename_file 	= 'modul_' . uniqid() . '_' . str_slug($file_modul->getClientOriginalName()) . '.' .$file_modul->getClientOriginalExtension();
+		$rename_file 	= 'materi_' . uniqid() . '_' . str_slug(str_replace($file_modul->getClientOriginalExtension(),'',$file_modul->getClientOriginalName())) . '.' .$file_modul->getClientOriginalExtension();
 		$file_modul->move(public_path('modul'), $rename_file);
 		
 		$form_data = array(
-            'matapelajaran_id' 	=> $request->matapelajaran_id,
 			'nama_modul' 		=> $request->nama_modul,
 			'file_modul' 		=> $rename_file,
 		);
 		ModulPembelajaranDB::create($form_data);
 
-		return redirect()->back()->with('success','Modul Pembelajaran '.$request->nama_modul.' Berhasil Diinputkan.');
+		return redirect()->back()->with('success','Materi Pembelajaran '.$request->nama_modul.' Berhasil Diinputkan.');
 	}
 
 	public function downloadmodul(Request $request,$id)
 	{
 		$data 	= ModulPembelajaranDB::find($id);
-		// dd($data);
 		$files 	= asset('modul').'/'.$data->file_modul;
-		// dd($files);
 		return redirect($files);
 	}
 

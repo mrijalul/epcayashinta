@@ -28,22 +28,25 @@
 					<form action="{{ route('video-pembelajaran.store') }}" method="post" enctype="multipart/form-data">
 
 						@csrf
-						
-						<div class="mb-3">
-							<label for="matapelajaran_id">Mata Pelajaran</label>
-							<select name="matapelajaran_id" id="matapelajaran_id" class="form-control">
-								@foreach ($mapel as $m)
-									<option value="{{ $m->id }}">{{ $m->matpel }}</option>
-								@endforeach
-							</select>
-						</div>
+
 						<div class="mb-3">
 							<label for="nama_video">Nama Video</label>
 							<input type="text" class="form-control" id="nama_video" placeholder="" name="nama_video" required>
 						</div>
 						<div class="mb-3">
-							<label for="file_video">File Video (mp4,m4a,mkv only)</label>
-							<input type="file" class="form-control" id="file_video" placeholder="" name="file_video" required accept=".mp4,.m4a,.mkv">
+							<select id="opsivideo" class="form-control">
+								<option>Pilih Salah satu</option>
+								<option value="pil1">Link Youtube</option>
+								<option value="pil2">Upload Video</option>
+							</select>
+						</div>
+						<div class="mb-3 videos" id="pil1">
+							<label for="file_video">Link Youtube</label>
+							<input type="text" class="form-control" id="link_ytb" placeholder="https://www.youtube.com/watch?v=GmLFHGud7I8" name="link_ytb">
+						</div>
+						<div class="mb-3 videos" id="pil2">
+							<label for="file_video">File Video (mp4,m4a,mkv only) max. 50mb</label>
+							<input type="file" class="form-control" id="file_video" name="file_video" accept=".mp4,.m4a,.mkv">
 						</div>
 
 						<button type="submit" class="btn btn-primary mb-3">Submit</button>
@@ -59,10 +62,8 @@
 						<thead>
 							<tr>
 								<th>No.</th>
-								<th>Mata Pelajaran</th>
 								<th>Nama Video</th>
 								<th>File Video</th>
-								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,12 +73,11 @@
 							@foreach ($data as $video)
 							<tr>
 								<td>{{ $no++ }}</td>
-								<td>{{ $video->matapelajaran_id }}</td>
 								<td>{{ $video->nama_video }}</td>
 								<td>
 									<!-- Button trigger modal -->
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#video{{ $video->id }}">
-										Launch demo modal
+										Lihat Video 
 									</button>
 
 									<!-- Modal -->
@@ -90,7 +90,7 @@
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<div class="modal-body">
+												<div class="modal-body" style="margin: 0 auto;">
 													<video
 														id="my-video"
 														class="video-js"
@@ -99,11 +99,17 @@
 														width="640"
 														height="264"
 														poster="MY_VIDEO_POSTER.jpg"
-														data-setup="{}"
+														@if (!empty($video->link_ytb))
+														data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "{{ $video->link_ytb }}"}] }'
+														@else
+														data-setup="{}"	
+														@endif
 														>
-														<source src="{{ asset('video') }}/{{ $video->file_video }}" type="video/mp4" />
+														@if (!empty($video->file_video))
+															<source src="{{ asset('video') }}/{{ $video->file_video }}" type="video/mp4" />
+															<source src="{{ asset('video') }}/{{ $video->file_video }}" type="video/webm" />
+														@endif
 
-														<source src="{{ asset('video') }}/{{ $video->file_video }}" type="video/webm" />
 														<p class="vjs-no-js">
 															To view this video please enable JavaScript, and consider upgrading to a
 															web browser that
@@ -114,14 +120,12 @@
 													</video>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													<button type="button" class="btn btn-primary">Save changes</button>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</td>
-								<td>button</td>
 							</tr>
 							@endforeach
 						</tbody>
@@ -139,12 +143,22 @@
 @push('scripts')
 <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <script src="https://vjs.zencdn.net/7.10.2/video.js"></script>
+<script src="{{ asset('js/Youtube.min.js') }}"></script>
 <script>
 	$( document ).ready(function() {
+		$('#opsivideo').change(function(){
+			$('.videos').hide();
+			$('#' + $(this).val()).show();
+		});
 		$('#modulid').DataTable();
 	} );
 </script>
 @endpush
 @push('styles')
 <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+<style>
+	.videos{
+		display: none;
+	}
+</style>
 @endpush

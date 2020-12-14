@@ -13,10 +13,22 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['web']], function () {
+	//mata pelajaran
 	Route::resource('matpel', 'MatapelajaranController');
+	Route::resource('soal-latihan', 'SoallatihanController');
+	
+	//modul pembelajaran
 	Route::resource('modul-pembelajaran', 'ModulpembelajaranController');
+	
+	//video pembelajaran
 	Route::resource('video-pembelajaran', 'VideopembelajaranController');
 	Route::get('modul-pembelajaran/download/{id}/modul','ModulpembelajaranController@downloadmodul')->name('modul-pembelajaran.download');
+	
+	//soal latihan
+	Route::get('soal-latihan','SoallatihanController@index')->name('soal.latihan.index');
+	Route::get('soal-latihan/{id}/essay', 'SoallatihanessayController@index')->name('soal.latihan.essay.index');
+	Route::post('soal-latihan/{id}/essay/submit','SoallatihanessayController@submitsoalessay')->name('soal.latihan.essay.submit.form');
+	Route::post('soal-latihan/{id}/essay/submit/jawaban','SoallatihanessayController@submitjawabanessay')->name('soal.latihan.essay.submit.jawaban');
 
 	//kas kecil master 
 	Route::get('kas-kecil', 'KaskecilController@index')->name('kaskecil');

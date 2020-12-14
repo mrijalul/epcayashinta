@@ -11,14 +11,42 @@
 	
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	@stack('styles')
+	<style>
+		@font-face {
+			font-family: Kathen;
+			src: url(/fonts/kathen/Kathen.ttf);
+		}
+		.kathen{
+			font-family: 'Kathen';
+		}
+		.float{
+			position:fixed;
+			width:60px;
+			height:60px;
+			bottom:40px;
+			right:40px;
+			background-color:#25d366;
+			color:#FFF;
+			border-radius:50px;
+			text-align:center;
+			font-size:30px;
+			box-shadow: 2px 2px 3px #999;
+			z-index:100;
+		}
+
+		.my-float{
+			margin-top:16px;
+		}
+	</style>
 </head>
 <body>
 	<div id="app" style="background: #7579e7; height: 100%;">
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 			<div class="container">
-				<a class="navbar-brand" href="{{ url('/') }}">
+				<a class="navbar-brand kathen" href="{{ url('/') }}">
 					{{ config('app.name', 'Laravel') }}
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -70,6 +98,9 @@
 		<main role="main" class="container">
 			@yield('content')
 		</main>
+		<a href="https://api.whatsapp.com/send?phone=51955081075&text=Hola%21%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Varela%202." class="float" target="_blank">
+			<i class="fa fa-whatsapp my-float"></i>
+		</a>
 	</div>
 
 	<!-- Scripts -->
