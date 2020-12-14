@@ -15,7 +15,6 @@ class CreateModulpembelajaransTable extends Migration
     {
         Schema::create('modulpembelajarans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('matapelajaran_id')->nullable();
             $table->string('nama_modul')->nullable();
             $table->string('file_modul')->nullable();
             $table->timestamps();
