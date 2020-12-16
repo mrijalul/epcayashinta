@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4 kathen" style="color: #fff">Tambah Pengajuan</h1>
+	<h1 class="display-4" style="color: #fff">Tambah Pengajuan</h1>
 </div>
 <div class="row">
 	<div class="col-md-8 blog-main">
@@ -61,6 +61,20 @@
 <script>
 	$( document ).ready(function() {
 		$('.datepicker').datepicker( { dateFormat: 'dd-mm-yy' });
+		var availableTags = [
+			"Konsumsi","ATK","Fotokopi","Transportasi","Biaya listrik, air, telepon"
+		];
+		$( "#namakun" ).autocomplete({
+		source: availableTags,
+		minLength: 0
+		}).focus(function(){            
+            // The following works only once.
+            // $(this).trigger('keydown.autocomplete');
+            // As suggested by digitalPBK, works multiple times
+            // $(this).data("autocomplete").search($(this).val());
+            // As noted by Jonny in his answer, with newer versions use uiAutocomplete
+            $(this).data("uiAutocomplete").search($(this).val());
+		});
 	} );
 </script>
 @endpush

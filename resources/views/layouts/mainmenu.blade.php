@@ -11,6 +11,8 @@
 			<li class="list-group-item"><a href="{{route('listpengajuankaskecil', [$menukaskecil])}}">List Pengeluaran Kas Kecil</a></li>
 			<li class="list-group-item"><a href="{{route('pingisiankembali', [$menukaskecil])}}">Pengisian Kembali kas kecil</a></li>
 			<li class="list-group-item"><a href="{{route('jurnalkaskecil', [$menukaskecil])}}">Jurnal Kas Kecil</a></li>
+			<li class="list-group-item"><a href="{{route('bukukaskecil', [$menukaskecil])}}">Buku Kas Kecil</a></li>
+			
 		</ul>
 	</div>
 	<p></p>

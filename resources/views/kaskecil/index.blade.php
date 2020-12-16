@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4 kathen" style="color: #fff">Kas Kecil</h1>
+	<h1 class="display-4" style="color: #fff">Kas Kecil</h1>
 </div>
 <div class="row">
 	<div class="col-md-8 blog-main">
@@ -29,7 +29,15 @@
 						@csrf
 						<div class="mb-3">
 							<label for="matpel">Nama Kas Kecil</label>
-							<input type="text" class="form-control" id="matpel" placeholder="" name="nama" >
+							<input type="text" class="form-control" id="nama" placeholder="" name="nama" >
+						</div>
+						<div class="mb-3">
+							<label for="matpel">Nama PT</label>
+							<input type="text" class="form-control" id="namaperusahaan" placeholder="" name="namaperusahaan" >
+						</div>
+						<div class="mb-3">
+							<label for="matpel">Periode</label>
+							<input type="text" class="form-control" id="periode" placeholder="" name="periode" value="Januari 2020" >
 						</div>
 						<button type="submit" class="btn btn-primary mb-3">Submit</button>
 					</form>
@@ -55,6 +63,7 @@
 								<td>
                                 <a href="javascript:if(confirm('Anda yakin akan menghapus buku kas kecil ini?')) window.location.href
 = '{{route('hapuskaskecil', [$kaskecil->id])}}'">[Hapus]</a>
+								<a href="{{route('editkaskecil', [$kaskecil->id])}}">[Edit]</a>
                                 <a href="{{route('pembentukandana', [$kaskecil->id])}}">[Isi]</a>
                                 </td>
 							</tr>

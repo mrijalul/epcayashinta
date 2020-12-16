@@ -34,6 +34,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('kas-kecil', 'KaskecilController@index')->name('kaskecil');
 	Route::post('kas-kecil', 'KaskecilController@tambah');
 	Route::get('/kas-kecil/hapus/{id}',"KaskecilController@hapus")->name('hapuskaskecil');
+	Route::get('/kas-kecil/edit/{id}',"KaskecilController@editkaskecil")->name('editkaskecil');
+	Route::post('/kas-kecil/edit/{id}',"KaskecilController@konfirmasieditkaskecil");
 
 	//kas kecil pembentukan dana
 	Route::get('/kas-kecil/pembentukandana/{id}',"KaskecilController@pembentukandana")->name('pembentukandana');
@@ -54,4 +56,8 @@ Route::group(['middleware' => ['web']], function () {
 
 	//kas kecil jurnal
 	Route::get('/kas-kecil/jurnalkaskecil/{id}',"KaskecilController@jurnalkaskecil")->name('jurnalkaskecil');
+	
+	//kas kecil buku
+	Route::get('/kas-kecil/bukukaskecil/{id}',"KaskecilController@bukukaskecil")->name('bukukaskecil');
+	Route::post('/kas-kecil/bukukaskecil/{id}',"KaskecilController@simpanbukukaskecil");
 });
