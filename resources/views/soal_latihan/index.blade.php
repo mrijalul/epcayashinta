@@ -46,7 +46,7 @@
 							<tr>
 								<th>No.</th>
 								<th>Materi Soal Latihan</th>
-								<th>Aksi</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -57,7 +57,7 @@
 							<tr>
 								<td>{{ $no++ }}</td>
 								<td>{{ $matpel->matpel }}</td>
-								<td>button</td>
+								<td><a href="{{ route('soal-latihan.show',$matpel->id) }}">Detail</a></td>
 							</tr>
 							@endforeach
 						</tbody>

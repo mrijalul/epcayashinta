@@ -22,6 +22,7 @@
 			<a href="{{ route('home') }}">Main Menu</a>
 		</div>
 		<ul class="list-group list-group-flush">
+			<li class="list-group-item"><a href="{{ route('about') }}">About</a></li>
 			<li class="list-group-item"><a href="{{ route('kaskecil') }}">Simulasi Kas Kecil</a></li>
 			<li class="list-group-item"><a href="{{ route('modul-pembelajaran.index') }}">Materi Pembelajaran</a></li>
 			<li class="list-group-item"><a href="{{ route('video-pembelajaran.index') }}">Video Pembelajaran</a></li>

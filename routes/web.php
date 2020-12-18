@@ -11,21 +11,26 @@ Route::post('register/guru','Auth\RegisterController@postregisterguru')->name('p
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('about','HomeController@about')->name('about');
 
 Route::group(['middleware' => ['web']], function () {
+	//about
 	//mata pelajaran
-	Route::resource('matpel', 'MatapelajaranController');
-	Route::resource('soal-latihan', 'SoallatihanController');
+	Route::resource('matpel', 'MatapelajaranController')->only(['index','store']);
+	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan']);
 	
 	//modul pembelajaran
-	Route::resource('modul-pembelajaran', 'ModulpembelajaranController');
+	Route::resource('modul-pembelajaran', 'ModulpembelajaranController')->only(['index','store','downloadmodul']);
 	
 	//video pembelajaran
-	Route::resource('video-pembelajaran', 'VideopembelajaranController');
+	Route::resource('video-pembelajaran', 'VideopembelajaranController')->only(['index','store']);
 	Route::get('modul-pembelajaran/download/{id}/modul','ModulpembelajaranController@downloadmodul')->name('modul-pembelajaran.download');
 	
 	//soal latihan
 	Route::get('soal-latihan','SoallatihanController@index')->name('soal.latihan.index');
+	// soal latihan pilgan
+	Route::post('soal-latihan/{id}/submit/pilgan','SoallatihanController@submitsoalpilgan')->name('soal.latihan.submit.soal.pilgan');
+	//essay
 	Route::get('soal-latihan/{id}/essay', 'SoallatihanessayController@index')->name('soal.latihan.essay.index');
 	Route::post('soal-latihan/{id}/essay/submit','SoallatihanessayController@submitsoalessay')->name('soal.latihan.essay.submit.form');
 	Route::post('soal-latihan/{id}/essay/submit/jawaban','SoallatihanessayController@submitjawabanessay')->name('soal.latihan.essay.submit.jawaban');

@@ -13,11 +13,6 @@ class MatapelajaranController extends Controller
 		return view('matpel.index', compact('data'));
 	}
 
-	public function create()
-	{
-		//
-	}
-
 	public function store(Request $request)
 	{
 		$request->validate([
@@ -30,25 +25,5 @@ class MatapelajaranController extends Controller
 		$data->save();
 
 		return redirect()->back()->with('success','Mata Pelajaran '.$request->matpel.' Berhasil Diinputkan.');
-	}
-
-	public function show(Matapelajaran $matapelajaran)
-	{
-		//
-	}
-
-	public function edit(Matapelajaran $matapelajaran)
-	{
-		//
-	}
-
-	public function update(Request $request, Matapelajaran $matapelajaran)
-	{
-		//
-	}
-
-	public function destroy(Matapelajaran $matapelajaran)
-	{
-		//
 	}
 }

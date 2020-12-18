@@ -27,6 +27,9 @@ class UpdateKaskecilAddperusahaanperiode extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('kaskecils', function (Blueprint $table) {
+            $table->dropColumn('namaperusahaan');
+            $table->dropColumn('periode');
+        });
     }
 }
