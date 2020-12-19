@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ModulpembelajaranController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
 	public function index()
 	{
 		$data 	= ModulPembelajaranDB::orderBy('id', 'desc')->get();

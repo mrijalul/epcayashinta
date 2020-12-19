@@ -9,7 +9,7 @@
 		<div class="card-deck mb-3">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="mb-3 text-center">Tambah Video Pembelajaran</h4>
+					<h4 class="mb-3 text-center">Pilihan Ganda</h4>
 					
 					@if($message = Session::get('success'))
 						<div class="alert alert-primary" role="alert">
@@ -41,31 +41,38 @@
 			$i = 1;
 			@endphp
 			@foreach($pilgan as $pilgan)
-			<div class="media text-muted pt-3">
-				<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-					<div class="d-flex justify-content-between align-items-center w-100">
-						<strong class="text-gray-dark"><h3>{{ $i++ }}. {{ $pilgan->question }}</h3></strong>
+			<div class="accordion" id="accordionPilgan{{ $pilgan->id }}">
+				<div class="card">
+					<div class="card-header" id="headingPilgan{{ $pilgan->id }}">
+						<h2 class="mb-0">
+							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePilgan{{ $pilgan->id }}" aria-expanded="false" aria-controls="collapsePilgan{{ $pilgan->id }}">{{ $i++ }}. {{ $pilgan->question }}</button>
+						</h2>
 					</div>
-					<span class="d-block">Pilihan A : {{ $pilgan->option1 }}</span>
-					<span class="d-block">Pilihan B : {{ $pilgan->option2 }}</span>
-					<span class="d-block">Pilihan C : {{ $pilgan->option3 }}</span>
-					<span class="d-block">Pilihan D : {{ $pilgan->option4 }}</span>
-					<span class="d-block">Pilihan E : {{ $pilgan->option5 }}</span>
-					<span class="d-block"> <h4>Jawaban : 
-						@if($pilgan->answer == '1')
-						Pilihan A
-						@elseif($pilgan->answer == '2')
-						Pilihan B
-						@elseif($pilgan->answer == '3')
-						Pilihan C
-						@elseif($pilgan->answer == '4')
-						Pilihan D
-						@elseif($pilgan->answer == '5')
-						Pilihan E
-						@else
-						@endif
-					</h4>
-					</span>
+					<div id="collapsePilgan{{ $pilgan->id }}" class="collapse" aria-labelledby="headingPilgan{{ $pilgan->id }}" data-parent="#accordionPilgan{{ $pilgan->id }}">
+						<div class="card-body">
+							<span class="d-block">Pilihan A : {{ $pilgan->option1 }}</span>
+							<span class="d-block">Pilihan B : {{ $pilgan->option2 }}</span>
+							<span class="d-block">Pilihan C : {{ $pilgan->option3 }}</span>
+							<span class="d-block">Pilihan D : {{ $pilgan->option4 }}</span>
+							<span class="d-block">Pilihan E : {{ $pilgan->option5 }}</span>
+							<span class="d-block">
+								<h4>Jawaban : 
+								@if($pilgan->answer == '1')
+								Pilihan A
+								@elseif($pilgan->answer == '2')
+								Pilihan B
+								@elseif($pilgan->answer == '3')
+								Pilihan C
+								@elseif($pilgan->answer == '4')
+								Pilihan D
+								@elseif($pilgan->answer == '5')
+								Pilihan E
+								@else
+								@endif
+								</h4>
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
 			@endforeach

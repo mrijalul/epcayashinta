@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class VideopembelajaranController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
 	public function index()
 	{
 		$data 	= VideoPembelajaranDB::orderBy('id', 'desc')->get();

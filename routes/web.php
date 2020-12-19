@@ -9,15 +9,15 @@ Route::get('register/guru','Auth\RegisterController@registerguru')->name('regist
 Route::post('register/guru','Auth\RegisterController@postregisterguru')->name('post.guru.register');
 
 Auth::routes();
-
+// home epca
 Route::get('/home', 'HomeController@index')->name('home');
+// about epca
 Route::get('about','HomeController@about')->name('about');
 
 Route::group(['middleware' => ['web']], function () {
-	//about
 	//mata pelajaran
 	Route::resource('matpel', 'MatapelajaranController')->only(['index','store']);
-	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan']);
+	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan','soal.latihan.siswa.pilgan','soal.latihan.siswa.pilgan.submit']);
 	
 	//modul pembelajaran
 	Route::resource('modul-pembelajaran', 'ModulpembelajaranController')->only(['index','store','downloadmodul']);
@@ -30,6 +30,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('soal-latihan','SoallatihanController@index')->name('soal.latihan.index');
 	// soal latihan pilgan
 	Route::post('soal-latihan/{id}/submit/pilgan','SoallatihanController@submitsoalpilgan')->name('soal.latihan.submit.soal.pilgan');
+	// siswa menjawab soal pilgan
+	Route::get('soal-latihan/{id}/pilihan-ganda/siswa','SoallatihanController@soalpilihangandasiswa')->name('soal.latihan.siswa.pilgan');
+	// siswa mensubmit jawaban pilgan
+	Route::post('soal-latihan/{id}/pilihan-ganda/siswa/submit','SoallatihanController@soalpilihangandasiswasubmit')->name('soal.latihan.siswa.pilgan.submit');
+
+	Route::get('soal-latihan/{id}/submit/{user_id}','SoallatihanController@hasil')->name('soal.latihan.siswa.hasil');
 	//essay
 	Route::get('soal-latihan/{id}/essay', 'SoallatihanessayController@index')->name('soal.latihan.essay.index');
 	Route::post('soal-latihan/{id}/essay/submit','SoallatihanessayController@submitsoalessay')->name('soal.latihan.essay.submit.form');
