@@ -6,12 +6,14 @@
 </div>
 <div class="row">
 	<div class="col-md-8 blog-main">
-		<div class="alert alert-light" role="alert">
+		<div class="alert alert-light text-center" role="alert">
 			Total Soal : {{ $total_soal }} Soal<br>
+			<h5>Nilai Saya : {{ round($nilai_saya) }}</h5>
 		</div>
 		@foreach($data as $d)
 		<div class="alert alert-light" role="alert">
 			<h4 class="alert-heading">{{ $d->question }}</h4>
+			<hr>
 			<p>
 				Jawaban Anda : 
 				@if($d->user_answer == 1)
@@ -43,7 +45,11 @@
 				@endif
 			</p>
 			<hr>
-			<p class="mb-0">Nilai : </p>
+			@if($d->nilai == 1)
+			<p class="text-success">Jawaban Anda Benar</p>
+			@else
+			<p class="text-danger">Jawaban Anda Salah</p>
+			@endif
 		</div>
 		@endforeach
 

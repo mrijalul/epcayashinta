@@ -100,8 +100,11 @@ class SoallatihanController extends Controller
 						['user_id',$user_id]
 					])->get();
 		$total_soal = PilihanGanda::where('matapelajaran_id','=',$id)->count();
-		$nilai_saya = 100 / $total_soal;
-		// dd($nilai_saya);		
-		return view('soal_latihan.pilgan.hasil', compact('data','total_soal'));
+		$sum 		= JawabanPilihanGanda::where([
+						['matapelajaran_id',$id],
+						['user_id',$user_id]
+					])->sum('nilai');
+		$nilai_saya = 100 / $total_soal * $sum;
+		return view('soal_latihan.pilgan.hasil', compact('data','total_soal','nilai_saya'));
 	}
 }
