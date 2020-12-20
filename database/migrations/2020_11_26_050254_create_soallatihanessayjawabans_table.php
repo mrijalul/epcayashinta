@@ -6,31 +6,31 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSoallatihanessayjawabansTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('soallatihanessayjawabans', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id')->nullable();
-            $table->integer('soallatihanessay_id')->nullable();
-            $table->integer('matapelajaran_id')->nullable();
-            $table->text('jawaban_essay')->nullable();
-            $table->string('nilai')->nullable();
-            $table->timestamps();
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('soallatihanessayjawabans', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->integer('user_id')->nullable();
+			$table->integer('soallatihanessay_id')->nullable();
+			$table->integer('matapelajaran_id')->nullable();
+			$table->text('jawaban_essay')->nullable();
+			$table->string('nilai')->nullable();
+			$table->timestamps();
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('soallatihanessayjawabans');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('soallatihanessayjawabans');
+	}
 }

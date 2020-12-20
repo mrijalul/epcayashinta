@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Matapelajaran as MataPelajaranDB;
 use App\Soallatihanpilgan as PilihanGanda;
 use App\jawabanpilgan as JawabanPilihanGanda;
+use App\Soallatihanessay as SoalEssayDB;
+use App\Soallatihanessayjawaban as JawabanEssay;
 use Illuminate\Support\Facades\Auth;
 
 class SoallatihanController extends Controller
@@ -36,8 +38,9 @@ class SoallatihanController extends Controller
 	public function show($id)
 	{
 		$soal_latihan 	= MataPelajaranDB::find($id);
-		$pilgan 		= PilihanGanda::where('matapelajaran_id','=',$id)->get();
-		return view('soal_latihan.opsi', compact('soal_latihan','pilgan'));
+		$pilgan 		= PilihanGanda::where('matapelajaran_id','=',$id)->orderBy('id', 'asc')->get();
+		$essay			= SoalEssayDB::where('matapelajaran_id','=',$id)->orderBy('id', 'asc')->get();
+		return view('soal_latihan.opsi', compact('soal_latihan','pilgan','essay'));
 	}
 	public function submitsoalpilgan($id,Request $request)
 	{
@@ -106,5 +109,36 @@ class SoallatihanController extends Controller
 					])->sum('nilai');
 		$nilai_saya = 100 / $total_soal * $sum;
 		return view('soal_latihan.pilgan.hasil', compact('data','total_soal','nilai_saya'));
+	}
+
+	public function submitsoalessay($id,Request $request)
+	{
+		$request->validate([
+			'pertanyaan'	=> 'required'
+		]);
+		$data = new SoalEssayDB;
+		$data->matapelajaran_id = $id;
+		$data->pertanyaan 		= $request->pertanyaan;
+		$data->save();
+		return redirect()->back();
+	}
+	public function soalessaysiswa($id)
+	{
+		$soal_latihan 	= MataPelajaranDB::find($id);
+		$essay 			= SoalEssayDB::where('matapelajaran_id','=',$id)->orderBy('id','asc')->get();
+		return view('soal_latihan.soalessay', compact('soal_latihan','essay'));
+	}
+	public function soalessaysiswasubmit($id, Request $request)
+	{
+		foreach ($request->jawaban as $key => $value) {
+			JawabanEssay::create([
+				'user_id'				=> Auth::user()->id,
+				'soallatihanessay_id' 	=> $request->no_soal[$key],
+				'matapelajaran_id'		=> $id,
+				'pertanyaan'			=> $request->soal[$key],
+				'jawaban_essay'			=> $request->jawaban[$key]
+			]);
+		}
+		return redirect()->route('soal.latihan.siswa.hasil',[$id,Auth::user()->id]);
 	}
 }

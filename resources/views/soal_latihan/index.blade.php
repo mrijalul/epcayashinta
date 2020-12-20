@@ -75,7 +75,7 @@
 				<div class="card-body">
 					<h5 class="card-title">{{ $nmr++ }}. {{ $matpelsiswa->matpel }}</h5>
 					<a href="{{ route('soal.latihan.siswa.pilgan',$matpelsiswa->id) }}" class="card-link">Pilihan Ganda</a>
-					<a href="#" class="card-link">Essay</a>
+					<a href="{{ route('soal.latihan.siswa.essay',$matpelsiswa->id) }}" class="card-link">Essay</a>
 				</div>
 			</div>
 			@endforeach

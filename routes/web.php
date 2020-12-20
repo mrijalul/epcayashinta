@@ -17,7 +17,7 @@ Route::get('about','HomeController@about')->name('about');
 Route::group(['middleware' => ['web']], function () {
 	//mata pelajaran
 	Route::resource('matpel', 'MatapelajaranController')->only(['index','store']);
-	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan','soal.latihan.siswa.pilgan','soal.latihan.siswa.pilgan.submit']);
+	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan','soal.latihan.siswa.pilgan','soal.latihan.siswa.pilgan.submit','soal.latihan.submit.soal.essay','soal.latihan.siswa.essay','soal.latihan.siswa.essay.submit']);
 	
 	//modul pembelajaran
 	Route::resource('modul-pembelajaran', 'ModulpembelajaranController')->only(['index','store','downloadmodul']);
@@ -34,11 +34,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('soal-latihan/{id}/pilihan-ganda/siswa','SoallatihanController@soalpilihangandasiswa')->name('soal.latihan.siswa.pilgan');
 	// siswa mensubmit jawaban pilgan
 	Route::post('soal-latihan/{id}/pilihan-ganda/siswa/submit','SoallatihanController@soalpilihangandasiswasubmit')->name('soal.latihan.siswa.pilgan.submit');
+	// cek hasil pilgan
+	Route::get('soal-latihan/{id}/hasil/{user_id}','SoallatihanController@hasil')->name('soal.latihan.siswa.hasil');
+	//soal latihan essay
+	Route::post('soal-latihan/{id}/submit/essay', 'SoallatihanController@submitsoalessay')->name('soal.latihan.submit.soal.essay');
+	// siswa menjawab soal essay
+	Route::get('soal-latihan/{id}/essay/siswa','SoallatihanController@soalessaysiswa')->name('soal.latihan.siswa.essay');
+	// siswa mensubmit jawaban essay
+	Route::post('soal-latihan/{id}/essay/siswa/submit','SoallatihanController@soalessaysiswasubmit')->name('soal.latihan.siswa.essay.submit');
 
-	Route::get('soal-latihan/{id}/submit/{user_id}','SoallatihanController@hasil')->name('soal.latihan.siswa.hasil');
-	//essay
-	Route::get('soal-latihan/{id}/essay', 'SoallatihanessayController@index')->name('soal.latihan.essay.index');
-	Route::post('soal-latihan/{id}/essay/submit','SoallatihanessayController@submitsoalessay')->name('soal.latihan.essay.submit.form');
 	Route::post('soal-latihan/{id}/essay/submit/jawaban','SoallatihanessayController@submitjawabanessay')->name('soal.latihan.essay.submit.jawaban');
 
 	//kas kecil master 

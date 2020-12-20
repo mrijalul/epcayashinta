@@ -6,34 +6,68 @@
 </div>
 <div class="row">
 	<div class="col-md-8 blog-main">
-		<div class="card-deck mb-3">
+		<div class="accordion" id="accordionSoalPilgan">
 			<div class="card">
-				<div class="card-body">
-					<h4 class="mb-3 text-center">Pilihan Ganda</h4>
-					
-					@if($message = Session::get('success'))
-						<div class="alert alert-primary" role="alert">
-							{{ $message }}
-						</div>
-					@endif
-
-					@if($errors->any())
-					<div class="alert alert-danger" role="alert">
-						@foreach ($errors->all() as $error)
-							<p>{{ $error }}</p>
-						@endforeach
-					</div>
-					@endif
-
-					<form action="{{ route('soal.latihan.submit.soal.pilgan',$soal_latihan->id) }}" method="post">
-
-						@csrf
-
-						@include('soal_latihan.pilgan.tambahpertanyaan')
-					</form>
-
+				{{-- pilihan ganda --}}
+				<div class="card-header" id="SoalPilganID">
+					<h2 class="mb-0">
+						<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseSoalPilganID" aria-expanded="true" aria-controls="collapseSoalPilganID">
+							Input Soal Pilihan Ganda
+						</button>
+					</h2>
 				</div>
-			</div>
+
+				<div id="collapseSoalPilganID" class="collapse" aria-labelledby="SoalPilganID" data-parent="#accordionSoalPilgan">
+					<div class="card-body">
+						@if($message = Session::get('success'))
+							<div class="alert alert-primary" role="alert">
+								{{ $message }}
+							</div>
+						@endif
+
+						@if($errors->any())
+						<div class="alert alert-danger" role="alert">
+							@foreach ($errors->all() as $error)
+								<p>{{ $error }}</p>
+							@endforeach
+						</div>
+						@endif
+						<form action="{{ route('soal.latihan.submit.soal.pilgan',$soal_latihan->id) }}" method="post">
+							@csrf
+							@include('soal_latihan.pilgan.tambahpertanyaan')
+						</form>
+					</div>
+				</div>
+				{{-- essay --}}
+				<div class="card-header" id="SoalEssayID">
+					<h2 class="mb-0">
+						<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseSoalEssayID" aria-expanded="true" aria-controls="collapseSoalEssayID">
+							Input Soal Essay
+						</button>
+					</h2>
+				</div>
+				<div id="collapseSoalEssayID" class="collapse" aria-labelledby="SoalEssayID" data-parent="#accordionSoalPilgan">
+					<div class="card-body">
+						@if($message = Session::get('success'))
+							<div class="alert alert-primary" role="alert">
+								{{ $message }}
+							</div>
+						@endif
+
+						@if($errors->any())
+						<div class="alert alert-danger" role="alert">
+							@foreach ($errors->all() as $error)
+								<p>{{ $error }}</p>
+							@endforeach
+						</div>
+						@endif
+						<form action="{{ route('soal.latihan.submit.soal.essay',$soal_latihan->id) }}" method="post">
+							@csrf
+							@include('soal_latihan.essay.tambahpertanyaan')
+						</form>
+					</div>
+				</div>
+  			</div>
 		</div>
 		<div class="p-3 bg-white rounded shadow-sm">
 			<h6 class="border-bottom border-gray pb-2 mb-0">Soal Pilihan Ganda</h6>
@@ -45,7 +79,7 @@
 				<div class="card">
 					<div class="card-header" id="headingPilgan{{ $pilgan->id }}">
 						<h2 class="mb-0">
-							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePilgan{{ $pilgan->id }}" aria-expanded="false" aria-controls="collapsePilgan{{ $pilgan->id }}">{{ $i++ }}. {{ $pilgan->question }}</button>
+							<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePilgan{{ $pilgan->id }}" aria-expanded="false" aria-controls="collapsePilgan{{ $pilgan->id }}">{{ $i++ }}. {{ ucfirst($pilgan->question) }}</button>
 						</h2>
 					</div>
 					<div id="collapsePilgan{{ $pilgan->id }}" class="collapse" aria-labelledby="headingPilgan{{ $pilgan->id }}" data-parent="#accordionPilgan{{ $pilgan->id }}">
@@ -73,6 +107,19 @@
 							</span>
 						</div>
 					</div>
+				</div>
+			</div>
+			@endforeach
+		</div>
+		<div class="p-3 bg-white rounded shadow-sm">
+			<h6 class="border-bottom border-gray pb-2 mb-0">Soal Essay</h6>
+			@php
+			$nmr = 1;
+			@endphp
+			@foreach($essay as $es)
+			<div class="card">
+				<div class="card-body">
+					{{ $nmr++ }}. {{ ucfirst($es->pertanyaan) }}
 				</div>
 			</div>
 			@endforeach
