@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Kaskecil as Kaskecildb;
 use App\Pengajuankaskecil as Pengajuankaskecildb;
+use App\Akunbukukaskecil as Akunbukukaskecildb;
+use App\Listbukukaskecil as Listbukukaskecildb;
 use Illuminate\Support\Facades\Auth;
 
 class KaskecilController extends Controller
@@ -302,8 +304,131 @@ class KaskecilController extends Controller
         
     }
 
+    public function simpanbukukaskecil($id,Request $request) {
+        $akunbukukaskecil = Akunbukukaskecildb::where("kaskecil",$id)->first();
+        if(is_object($akunbukukaskecil)) {
+            $kaskeciledit = Akunbukukaskecildb::findOrFail($akunbukukaskecil->id);
+            $kaskeciledit->namaakun1 = $request->get('namaakun1');
+            $kaskeciledit->kodeakun1 = $request->get('kodeakun1');
+            $kaskeciledit->namaakun2 = $request->get('namaakun2');
+            $kaskeciledit->kodeakun2 = $request->get('kodeakun2');
+            $kaskeciledit->namaakun3 = $request->get('namaakun3');
+            $kaskeciledit->kodeakun3 = $request->get('kodeakun3');
+            $kaskeciledit->namaakun4 = $request->get('namaakun4');
+            $kaskeciledit->kodeakun4 = $request->get('kodeakun4');
+            $kaskeciledit->namaakun5 = $request->get('namaakun5');
+            $kaskeciledit->kodeakun5 = $request->get('kodeakun5');
+            $kaskeciledit->namaakun6 = $request->get('namaakun6');
+            $kaskeciledit->kodeakun6 = $request->get('kodeakun6');
+            $kaskeciledit->save();
+        }
+
+        $arraybukukaskecil = Listbukukaskecildb::where("kaskecil",$id)->get();
+
+        foreach($arraybukukaskecil as $listbukukaskecil) {
+
+            $bukukaskeciledit = Listbukukaskecildb::findOrFail($listbukukaskecil->id);
+            $bukukaskeciledit->tanggal = $request->get('tanggal'.$listbukukaskecil->id);
+            $bukukaskeciledit->bulan = $request->get('bulan'.$listbukukaskecil->id);
+            $bukukaskeciledit->nobukti = $request->get('nobukti'.$listbukukaskecil->id);
+            $bukukaskeciledit->keterangan = $request->get('keterangan'.$listbukukaskecil->id);
+            $bukukaskeciledit->penerimaan = $request->get('penerimaan'.$listbukukaskecil->id);
+            $bukukaskeciledit->pengeluaran = $request->get('pengeluaran'.$listbukukaskecil->id);
+            if(!is_numeric($request->get('akun1'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun1 = $request->get('akun1'.$listbukukaskecil->id);
+            }
+            if(!is_numeric($request->get('akun2'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun2 = $request->get('akun2'.$listbukukaskecil->id);
+            }
+            if(!is_numeric($request->get('akun3'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun3 = $request->get('akun3'.$listbukukaskecil->id);
+            }
+            if(!is_numeric($request->get('akun4'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun4 = $request->get('akun4'.$listbukukaskecil->id);
+            }
+            if(!is_numeric($request->get('akun5'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun5 = $request->get('akun5'.$listbukukaskecil->id);
+            }
+            if(!is_numeric($request->get('akun6'.$listbukukaskecil->id))) {
+                //echo "no numeric";
+            }
+            else {
+                $bukukaskeciledit->akun6 = $request->get('akun6'.$listbukukaskecil->id);
+            }
+            
+            $bukukaskeciledit->save();
+        }
+
+        if($request->get('button')=="tambah") {
+            $listbukukaskecilbaru1 = new Listbukukaskecildb;
+            $listbukukaskecilbaru1->kaskecil = $id;
+            $listbukukaskecilbaru1->save();
+        }
+
+       
+
+        return redirect()->route('bukukaskecil',[$id])->with('status', 'Buku Kas Kecil berhasil disimpan');
+    }
+
     public function bukukaskecil($id) {
+
         $kaskecil = Kaskecildb::findOrFail($id);
-        return view("kaskecil.bukukaskecil", ["menukaskecil"=>$id,"kaskecil"=>$kaskecil]);
+        $akunbukukaskecil = Akunbukukaskecildb::where("kaskecil",$id)->first();
+        
+        if(!is_object($akunbukukaskecil)) {
+            $akunbukukaskecilbaru = new Akunbukukaskecildb;
+            $akunbukukaskecilbaru->kaskecil = $id;
+            $akunbukukaskecilbaru->namaakun1 = "Konsumsi";
+            $akunbukukaskecilbaru->kodeakun1 = "011";
+            $akunbukukaskecilbaru->namaakun2 = "Transportasi";
+            $akunbukukaskecilbaru->kodeakun2 = "012";
+            $akunbukukaskecilbaru->namaakun3 = "ATK";
+            $akunbukukaskecilbaru->kodeakun3 = "013";
+            $akunbukukaskecilbaru->namaakun4 = "Konsumsi";
+            $akunbukukaskecilbaru->kodeakun4 = "014";
+            $akunbukukaskecilbaru->namaakun5 = "Transportasi";
+            $akunbukukaskecilbaru->kodeakun5 = "015";
+            $akunbukukaskecilbaru->namaakun6 = "ATK";
+            $akunbukukaskecilbaru->kodeakun6 = "016";
+            $akunbukukaskecilbaru->save();
+
+            $listbukukaskecilbaru1 = new Listbukukaskecildb;
+            $listbukukaskecilbaru1->kaskecil = $id;
+            $listbukukaskecilbaru1->save();
+
+            $listbukukaskecilbaru2 = new Listbukukaskecildb;
+            $listbukukaskecilbaru2->kaskecil = $id;
+            $listbukukaskecilbaru2->save();
+
+            $listbukukaskecilbaru3 = new Listbukukaskecildb;
+            $listbukukaskecilbaru3->kaskecil = $id;
+            $listbukukaskecilbaru3->save();
+
+            $listbukukaskecilbaru4 = new Listbukukaskecildb;
+            $listbukukaskecilbaru4->kaskecil = $id;
+            $listbukukaskecilbaru4->save();
+
+        }
+        $akunbukukaskecil = Akunbukukaskecildb::where("kaskecil",$id)->first();
+        $listbukukaskecil = Listbukukaskecildb::where("kaskecil",$id)->get();
+
+        return view("kaskecil.bukukaskecil", ["menukaskecil"=>$id,"kaskecil"=>$kaskecil,"akunbukukaskecil"=>$akunbukukaskecil,"listbukukaskecil"=>$listbukukaskecil]);
+        
+
     }
 }
