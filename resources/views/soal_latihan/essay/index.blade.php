@@ -11,7 +11,7 @@
 			<div class="card mb-3">
 				<div class="row no-gutters">
 					<div class="col-md-12">
-						<form action="{{ route('soal.latihan.essay.submit.form',$data->id) }}" method="post">
+						<form action="{{ route('soal.latihan.essay.submit.form',$data->id) }}" method="post" enctype="multipart/form-data">
 							@csrf
 							<div class="card-body card-wrapper-soal">
 								<label for="basic-url">Soal </label>

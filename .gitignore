@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/dbku
+/public/essay
+/public/modul
+/public/video
 /public/storage
 /storage/*.key
 /vendor

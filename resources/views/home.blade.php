@@ -59,7 +59,7 @@
 						<div class="card-body">
 							<i class="fa fa-database fa-3x"></i>
 							<h5 class="card-title">Rekap Nilai</h5>
-							<a href="#" class="btn btn-primary">Akses Disini</a>
+							<a href="{{ route('rekap-nilai.nilai') }}" class="btn btn-primary">Akses Disini</a>
 						</div>
 					</div>
 				</div>

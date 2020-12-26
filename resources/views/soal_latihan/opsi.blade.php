@@ -61,7 +61,7 @@
 							@endforeach
 						</div>
 						@endif
-						<form action="{{ route('soal.latihan.submit.soal.essay',$soal_latihan->id) }}" method="post">
+						<form action="{{ route('soal.latihan.submit.soal.essay',$soal_latihan->id) }}" method="post" enctype="multipart/form-data">
 							@csrf
 							@include('soal_latihan.essay.tambahpertanyaan')
 						</form>

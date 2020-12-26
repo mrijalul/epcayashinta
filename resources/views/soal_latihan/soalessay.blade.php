@@ -9,11 +9,7 @@
 		<div class="card-deck mb-3">
 			<div class="card">
 				<div class="card-body">
-					<form action="{{ route('soal.latihan.siswa.essay.submit',$soal_latihan->id) }}" method="POST">
-						@csrf
-						@include('soal_latihan.essay.soalsiswaessay')
-						<button type="submit" class="btn btn-primary">Kirim Jawaban</button>
-					</form>
+					@include('soal_latihan.essay.soalsiswaessay')
 				</div>
 			</div>
 		</div>

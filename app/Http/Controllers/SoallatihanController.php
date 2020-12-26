@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Auth;
 class SoallatihanController extends Controller
 {
 	public function __construct()
-    {
-        $this->middleware('auth');
-    }
+	{
+		$this->middleware('auth');
+	}
 
 	public function index()
 	{
@@ -114,13 +114,24 @@ class SoallatihanController extends Controller
 	public function submitsoalessay($id,Request $request)
 	{
 		$request->validate([
-			'pertanyaan'	=> 'required'
+			'pertanyaan'	=> 'required|mimes:pdf,docs,docx,doc|max:10240',
 		]);
+		// file upload
+		$pertanyaan 	= $request->file('pertanyaan');
+		$rename_file 	= 'soal_uraian_' . uniqid() . '_' . str_slug(str_replace($pertanyaan->getClientOriginalExtension(),'',$pertanyaan->getClientOriginalName())) . '.' .$pertanyaan->getClientOriginalExtension();
+		$pertanyaan->move(public_path('essay'), $rename_file);
+
 		$data = new SoalEssayDB;
 		$data->matapelajaran_id = $id;
-		$data->pertanyaan 		= $request->pertanyaan;
+		$data->pertanyaan 		= $rename_file;
 		$data->save();
 		return redirect()->back();
+	}
+	public function downloadsoalessay(Request $request,$id)
+	{
+		$data 	= SoalEssayDB::find($id);
+		$files 	= asset('essay').'/'.$data->pertanyaan;
+		return redirect($files);
 	}
 	public function soalessaysiswa($id)
 	{
