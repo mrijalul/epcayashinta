@@ -107,7 +107,7 @@ class SoallatihanController extends Controller
 						['matapelajaran_id',$id],
 						['user_id',$user_id]
 					])->sum('nilai');
-		$nilai_saya = 100 / $total_soal * $sum;
+		$nilai_saya = $sum*10;
 		return view('soal_latihan.pilgan.hasil', compact('data','total_soal','nilai_saya'));
 	}
 
