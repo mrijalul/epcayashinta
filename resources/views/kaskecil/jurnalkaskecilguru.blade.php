@@ -20,17 +20,10 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="col-md-12" style='text-align:left'>
-					@if($kaskecil->jurnalkaskecil=="N")
-					<a href="javascript:if(confirm('Anda yakin akan menyerahkan jurnal kas kecil  ini?')) window.location.href
-= '{{route('serahkanjurnalkaskecil', [$menukaskecil])}}'" class="btn btn-primary mb-3">Serahkan</a>
-					@else
-					<strong><p>Jurnal kas kecil ini sudah diserahkan</p></strong>
-					@endif
-					@if(session('status'))
-						<div class="alert alert-primary" role="alert">
-                        {{session('status')}}
-						</div>
-					@endif
+
+					<a href="{{route('kaskecilguru')}}" class="btn btn-primary mb-3">Kembali</a>
+					
+					
 					</div>
 					<table id="matpelid" class="table table-striped table-bordered" style="width:100%">
 						<thead>

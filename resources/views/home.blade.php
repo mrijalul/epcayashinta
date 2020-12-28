@@ -11,9 +11,15 @@
 				<div class="row no-gutters">
 					<div class="col-md-12">
 						<div class="card-body">
+							@if($userrole==2)
 							<i class="fa fa-credit-card-alt fa-3x"></i>
 							<h5 class="card-title">Simulasi Kas Kecil</h5>
 							<a href="{{ route('kaskecil') }}" class="btn btn-primary">Akses Disini</a>
+							@else
+							<i class="fa fa-credit-card-alt fa-3x"></i>
+							<h5 class="card-title">Rekap Simulasi Kas Kecil</h5>
+							<a href="{{ route('kaskecilguru') }}" class="btn btn-primary">Akses Disini</a>
+							@endif
 						</div>
 					</div>
 				</div>

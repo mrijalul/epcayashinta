@@ -18,6 +18,14 @@
 		<div class="card-deck mb-3 text-center">
 			<div class="card">
 				<div class="card-body" style="overflow-x:scroll">
+					<div class="col-md-12" style='text-align:left'>
+					@if($kaskecil->bukukaskecil=="N")
+					<a href="javascript:if(confirm('Anda yakin akan menyerahkan buku kas kecil  ini?')) window.location.href
+= '{{route('serahkanbukukaskecil', [$menukaskecil])}}'" class="btn btn-primary mb-3">Serahkan</a>
+					@else
+					<strong><p>Buku kas kecil ini sudah diserahkan</p></strong>
+					@endif
+					</div>
 					@if(session('status'))
 						<div class="alert alert-primary" role="alert">
                         {{session('status')}}

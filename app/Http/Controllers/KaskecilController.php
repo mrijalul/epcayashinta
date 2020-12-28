@@ -19,6 +19,10 @@ class KaskecilController extends Controller
         return view("kaskecil.index", ["datakaskecil" => $datakaskecil]);
     }
 
+    
+
+
+
     public function tambah(Request $request) {
         
         $user = Auth::user();
@@ -385,6 +389,20 @@ class KaskecilController extends Controller
         return redirect()->route('bukukaskecil',[$id])->with('status', 'Buku Kas Kecil berhasil disimpan');
     }
 
+    public function serahkanjurnalkaskecil($id) {
+        $kaskecil = Kaskecildb::findOrFail($id);
+        $kaskecil->jurnalkaskecil = "Y";
+        $kaskecil->save();
+        return redirect()->route('jurnalkaskecil',[$id])->with('status', 'Jurnal kas kecil berhasil diserahkan');
+    }
+
+    public function serahkanbukukaskecil($id) {
+        $kaskecil = Kaskecildb::findOrFail($id);
+        $kaskecil->bukukaskecil = "Y";
+        $kaskecil->save();
+        return redirect()->route('bukukaskecil',[$id])->with('status', 'Buku kas kecil berhasil diserahkan');
+    }
+
     public function bukukaskecil($id) {
 
         $kaskecil = Kaskecildb::findOrFail($id);
@@ -431,4 +449,111 @@ class KaskecilController extends Controller
         
 
     }
+
+
+    public function indexguru() {
+        $datakaskecil = Kaskecildb::where('jurnalkaskecil',"Y")->orWhere('bukukaskecil',"Y")->where('hapus','0')->join('users','users.id',"=",'kaskecils.userid')->select('users.name','kaskecils.id','kaskecils.jurnalkaskecil','kaskecils.bukukaskecil')->get();
+        return view("kaskecil.indexguru", ["datakaskecil" => $datakaskecil]);
+    }
+
+    public function jurnalkaskecilguru($id) {
+        $kaskecil = Kaskecildb::findOrFail($id);
+        $total = 0;
+        $arraydata = [];
+        if($kaskecil->saldo>0) {
+            $replacedate = str_replace("-","",$kaskecil->tanggal);
+            $explodedate = explode("-",$kaskecil->tanggal);
+            $tanggalreal = $explodedate[2]." ".$this->namabulan($explodedate[1]);
+            $arraydata[] = array("orderdate"=>$replacedate, "date"=>$tanggalreal,"textdebit"=>"Dana Kas Kecil","textkredit"=>"Kas<br>(Pengisian Kembali)","jumlah"=>$kaskecil->saldo);
+            $total = $total + $kaskecil->saldo;
+        }
+        $datakaskecil = Pengajuankaskecildb::where('kaskecil',$id)->get();
+        foreach($datakaskecil as $listpengajuan) {
+            $replacedate = str_replace("-","",$listpengajuan->tanggal);
+            $explodedate = explode("-",$listpengajuan->tanggal);
+            $tanggalreal = $explodedate[2]." ".$this->namabulan($explodedate[1]);
+            $arraydata[] = array("orderdate"=>$replacedate, "date"=>$tanggalreal,"textdebit"=>$listpengajuan->namakun,"textkredit"=>"Kas Kecil<br>(".$listpengajuan->keterangan.")","jumlah"=>$listpengajuan->jumlah);
+            $total = $total + $listpengajuan->jumlah;
+        }
+        if($kaskecil->pengembalianjumlah>0) {
+            $replacedate = str_replace("-","",$kaskecil->tanggalpengembalian);
+            $explodedate = explode("-",$kaskecil->tanggalpengembalian);
+            $tanggalreal = $explodedate[2]." ".$this->namabulan($explodedate[1]);
+            $arraydata[] = array("orderdate"=>$replacedate, "date"=>$tanggalreal,"textdebit"=>"Dana Kas Kecil","textkredit"=>"Kas<br>(Pengisian Kembali)","jumlah"=>$kaskecil->pengembalianjumlah);
+            $total = $total + $kaskecil->saldo;
+        }
+
+
+        $newarraydata = [];
+
+        if(is_array($arraydata)) {
+            usort($arraydata, function($a, $b) {
+                return $a['orderdate'] <=> $b['orderdate'];
+            });
+            $olddate = "";
+            foreach($arraydata as $listdata) {
+                if(trim($listdata["orderdate"])==trim($olddate)) {
+                    $olddate = $listdata["orderdate"];
+                    $listdata["date"] = "";
+                }
+                else {
+                    $olddate = $listdata["orderdate"];
+                }
+                
+                $newarraydata[] = $listdata;
+            }
+ 
+        }
+        return view("kaskecil.jurnalkaskecilguru", ["arraydata" => $newarraydata,"total"=>$total,"kaskecil"=>$kaskecil]);
+        
+    }
+
+    public function bukukaskecilguru($id) {
+
+        $kaskecil = Kaskecildb::findOrFail($id);
+        $akunbukukaskecil = Akunbukukaskecildb::where("kaskecil",$id)->first();
+        
+        if(!is_object($akunbukukaskecil)) {
+            $akunbukukaskecilbaru = new Akunbukukaskecildb;
+            $akunbukukaskecilbaru->kaskecil = $id;
+            $akunbukukaskecilbaru->namaakun1 = "Konsumsi";
+            $akunbukukaskecilbaru->kodeakun1 = "011";
+            $akunbukukaskecilbaru->namaakun2 = "Transportasi";
+            $akunbukukaskecilbaru->kodeakun2 = "012";
+            $akunbukukaskecilbaru->namaakun3 = "ATK";
+            $akunbukukaskecilbaru->kodeakun3 = "013";
+            $akunbukukaskecilbaru->namaakun4 = "Konsumsi";
+            $akunbukukaskecilbaru->kodeakun4 = "014";
+            $akunbukukaskecilbaru->namaakun5 = "Transportasi";
+            $akunbukukaskecilbaru->kodeakun5 = "015";
+            $akunbukukaskecilbaru->namaakun6 = "ATK";
+            $akunbukukaskecilbaru->kodeakun6 = "016";
+            $akunbukukaskecilbaru->save();
+
+            $listbukukaskecilbaru1 = new Listbukukaskecildb;
+            $listbukukaskecilbaru1->kaskecil = $id;
+            $listbukukaskecilbaru1->save();
+
+            $listbukukaskecilbaru2 = new Listbukukaskecildb;
+            $listbukukaskecilbaru2->kaskecil = $id;
+            $listbukukaskecilbaru2->save();
+
+            $listbukukaskecilbaru3 = new Listbukukaskecildb;
+            $listbukukaskecilbaru3->kaskecil = $id;
+            $listbukukaskecilbaru3->save();
+
+            $listbukukaskecilbaru4 = new Listbukukaskecildb;
+            $listbukukaskecilbaru4->kaskecil = $id;
+            $listbukukaskecilbaru4->save();
+
+        }
+        $akunbukukaskecil = Akunbukukaskecildb::where("kaskecil",$id)->first();
+        $listbukukaskecil = Listbukukaskecildb::where("kaskecil",$id)->get();
+
+        return view("kaskecil.bukukaskecilguru", ["kaskecil"=>$kaskecil,"akunbukukaskecil"=>$akunbukukaskecil,"listbukukaskecil"=>$listbukukaskecil]);
+        
+
+    }
+
+
 }
