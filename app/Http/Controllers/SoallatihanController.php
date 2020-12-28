@@ -139,17 +139,25 @@ class SoallatihanController extends Controller
 		$essay 			= SoalEssayDB::where('matapelajaran_id','=',$id)->orderBy('id','asc')->get();
 		return view('soal_latihan.soalessay', compact('soal_latihan','essay'));
 	}
-	public function soalessaysiswasubmit($id, Request $request)
+	public function soalessaysiswasubmit($matapelajaran_id, $soal_id, Request $request)
 	{
-		foreach ($request->jawaban as $key => $value) {
-			JawabanEssay::create([
-				'user_id'				=> Auth::user()->id,
-				'soallatihanessay_id' 	=> $request->no_soal[$key],
-				'matapelajaran_id'		=> $id,
-				'pertanyaan'			=> $request->soal[$key],
-				'jawaban_essay'			=> $request->jawaban[$key]
-			]);
-		}
-		return redirect()->route('soal.latihan.siswa.hasil',[$id,Auth::user()->id]);
+		// dd($request->all());
+		$request->validate([
+			'jawaban'	=> 'required|mimes:pdf,docs,docx,doc|max:10240',
+		]);
+		// file upload
+		$jawaban 		= $request->file('jawaban');
+		$rename_file 	= 'jawaban_' . Auth::user()->name . '_' . str_slug(str_replace($jawaban->getClientOriginalExtension(),'',$jawaban->getClientOriginalName())) . '.' .$jawaban->getClientOriginalExtension();
+		$jawaban->move(public_path('essay/jawaban/'), $rename_file);
+		$user_id 		= Auth::user()->id;
+
+		$data = new JawabanEssay;
+		$data->soallatihanessay_id 	= $soal_id;
+		$data->matapelajaran_id 	= $matapelajaran_id;
+		$data->jawaban_essay 		= $rename_file;
+		$data->user_id 				= $user_id;
+		$data->save();
+
+		return redirect()->route('rekap-nilai.nilai');
 	}
 }

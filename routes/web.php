@@ -17,7 +17,7 @@ Route::get('about','HomeController@about')->name('about');
 Route::group(['middleware' => ['web']], function () {
 	//mata pelajaran
 	Route::resource('matpel', 'MatapelajaranController')->only(['index','store']);
-	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan','soal.latihan.siswa.pilgan','soal.latihan.siswa.pilgan.submit','soal.latihan.submit.soal.essay','soal.latihan.siswa.essay.download']);
+	Route::resource('soal-latihan', 'SoallatihanController')->only(['index','store','show','essay.index','essay.submit.form','essay.submit.jawaban','soal.latihan.submit.soal.pilgan','soal.latihan.siswa.pilgan','soal.latihan.siswa.pilgan.submit','soal.latihan.submit.soal.essay','soal.latihan.siswa.essay.download','soal.latihan.siswa.essay.submit.jawab']);
 	
 	//modul pembelajaran
 	Route::resource('modul-pembelajaran', 'ModulpembelajaranController')->only(['index','store','downloadmodul']);
@@ -40,8 +40,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('soal-latihan/{id}/submit/essay', 'SoallatihanController@submitsoalessay')->name('soal.latihan.submit.soal.essay');
 	//download soal uraian
 	Route::get('soal-latihan/download/{id}/essay','SoallatihanController@downloadsoalessay')->name('soal.latihan.siswa.essay.download');
-	// siswa menjawab soal essay
+	// siswa melihat soal essay
 	Route::get('soal-latihan/{id}/essay/siswa','SoallatihanController@soalessaysiswa')->name('soal.latihan.siswa.essay');
+	// siswa upload jawaban essay
+	Route::post('soal-latihan/{matapelajaran_id}/essay/{soal_id}/siswa/submit','SoallatihanController@soalessaysiswasubmit')->name('soal.latihan.siswa.essay.submit.jawab');
 
 	// rekap nilai
 	Route::get('rekap-nilai','RekapnilaiController@nilai')->name('rekap-nilai.nilai');
