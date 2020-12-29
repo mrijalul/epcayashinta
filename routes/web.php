@@ -47,6 +47,9 @@ Route::group(['middleware' => ['web']], function () {
 
 	// rekap nilai
 	Route::get('rekap-nilai','RekapnilaiController@nilai')->name('rekap-nilai.nilai');
+	// guru download jawaban siswa
+	Route::get('download/{id}/jawaban','RekapnilaiController@downloadjawabansiswa')->name('download.jawaban.siswa');
+	Route::resource('rekap-nilai','RekapnilaiController')->only(['update']);
 
 	//kas kecil master 
 	Route::get('kas-kecil', 'KaskecilController@index')->name('kaskecil');

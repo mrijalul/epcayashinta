@@ -24,4 +24,19 @@ class RekapnilaiController extends Controller
 		$jawabanuraian = JawabanEssay::with('useranswer','matpeljrn')->get();
 		return view('rekap_nilai.nilai', compact('data','jawabanuraian'));
 	}
+
+	public function downloadjawabansiswa($id)
+	{
+		$data 	= JawabanEssay::find($id);
+		$files 	= asset('essay/jawaban').'/'.$data->jawaban_essay;
+		return redirect($files);
+	}
+
+	public function update($id, Request $request)
+	{
+		$data 			= JawabanEssay::find($id);
+		$data->nilai 	= $request->nilai;
+		$data->save();
+		return redirect()->back();
+	}
 }

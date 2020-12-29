@@ -19,7 +19,7 @@
 					<tbody>
 						@foreach($data as $d)
 						<tr>
-							<th>{{ $d->nama_penjawab }}</th>
+							<td>{{ $d->nama_penjawab }}</td>
 							<td>{{ $d->matpel }}</td>
 							<td>{{ $d->sums*10 }}</td>
 						</tr>
@@ -47,20 +47,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($jawabanuraian as $d)
+						{{-- {{ dd($jawabanuraian) }} --}}
+						@foreach($jawabanuraian as $uraian)
 						<tr>
-							<td>{{ $d->useranswer->name }}</td>
-							<td>{{ $d->matpeljrn->matpel }}</td>
-							<td>{{ $d->soallatihanessay_id }}</td>
-							<td>{{ $d->jawaban_essay }}</td>
+							<td>{{ $uraian->useranswer->name }}</td>
+							<td>{{ $uraian->matpeljrn->matpel }}</td>
+							<td><a href="{{ route('soal.latihan.siswa.essay.download',$uraian->soallatihanessay_id) }}" target="_blank">lihat Soal</a></td>
+							<td><a href="{{ route('download.jawaban.siswa',$uraian->id) }}" target="_blank">Lihat Jawaban Siswa</a></td>
 							<td>
-								@if($d->nilai == NULL)
+								@if($uraian->nilai == NULL)
 								belum di nilai oleh guru
 								@else
-								{{ $d->nilai }}
+								{{ $uraian->nilai }}
 								@endif
 							</td>
-							<td>Edit</td>
+							<td>
+								@include('rekap_nilai.modal_edit_nilai')
+							</td>
 						</tr>
 						@endforeach
 					</tbody>
