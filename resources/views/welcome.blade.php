@@ -7,7 +7,9 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="{{ asset('images/img-01.png') }}" alt="IMG">
 				</div>
-				
+				@auth
+					<a href="{{ url('/home') }}">Ke Home Page</a>
+				@else
 				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
 					@csrf
 					<span class="login100-form-title">
@@ -66,6 +68,7 @@
 						</a>
 					</div>
 				</form>
+				@endif
 			</div>
 		</div>
 	</div>

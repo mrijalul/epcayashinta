@@ -43,7 +43,10 @@
 							<th scope="col">Soal</th>
 							<th scope="col">Jawaban</th>
 							<th scope="col">Nilai</th>
+							@if (auth()->user()->role == 1)
 							<th scope="col"></th>
+							@else
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -61,9 +64,12 @@
 								{{ $uraian->nilai }}
 								@endif
 							</td>
+							@if (auth()->user()->role == 1)
 							<td>
 								@include('rekap_nilai.modal_edit_nilai')
 							</td>
+							@else
+							@endif
 						</tr>
 						@endforeach
 					</tbody>
