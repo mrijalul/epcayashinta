@@ -29,6 +29,44 @@
 			</div>
 		</div>
 	</div>
+	
 	@include('layouts.mainmenu')
+
+	<div class="col-md-8 blog-main">
+		<div class="card">
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">penjawab</th>
+							<th scope="col">Mata Pelajaran yang diujikan</th>
+							<th scope="col">Soal</th>
+							<th scope="col">Jawaban</th>
+							<th scope="col">Nilai</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($jawabanuraian as $d)
+						<tr>
+							<td>{{ $d->useranswer->name }}</td>
+							<td>{{ $d->matpeljrn->matpel }}</td>
+							<td>{{ $d->soallatihanessay_id }}</td>
+							<td>{{ $d->jawaban_essay }}</td>
+							<td>
+								@if($d->nilai == NULL)
+								belum di nilai oleh guru
+								@else
+								{{ $d->nilai }}
+								@endif
+							</td>
+							<td>Edit</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection

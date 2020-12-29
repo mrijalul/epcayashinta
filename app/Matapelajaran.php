@@ -12,4 +12,8 @@ class Matapelajaran extends Model
 	{
 		return $this->hasMany(jawabanpilgan::class,'id');
 	}
+	public function jwburaian()
+	{
+		return $this->hasMany(Soallatihanessayjawaban::class,'id');
+	}
 }

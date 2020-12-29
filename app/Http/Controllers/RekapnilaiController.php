@@ -21,7 +21,7 @@ class RekapnilaiController extends Controller
             ->select('users.name as nama_penjawab','matapelajarans.matpel',DB::raw('sum(nilai) as sums'))
 			->groupBy(['matapelajaran_id','user_id'])
 			->get();
-
-		return view('rekap_nilai.nilai', compact('data'));
+		$jawabanuraian = JawabanEssay::with('useranswer','matpeljrn')->get();
+		return view('rekap_nilai.nilai', compact('data','jawabanuraian'));
 	}
 }
