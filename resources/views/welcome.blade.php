@@ -3,7 +3,8 @@
 @section('content_login')	
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="wrap-login100">
+				<h2 style="position: absolute;top: 15%; text-align: center;">Selamat Datang di <br> EPCA</h2>
+			<div class="wrap-login100" style="padding: 150px 95px 0px 95px;">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="{{ asset('images/img-01.png') }}" alt="IMG">
 				</div>
@@ -61,7 +62,7 @@
 						</button>
 					</div>
 
-					<div class="text-center p-t-136">
+					<div class="text-center p-t-136" style="padding-top: 0;">
 						<a class="txt2" href="{{ route('register') }}">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>

@@ -43,7 +43,7 @@
 	</style>
 </head>
 <body>
-	<div id="app" style="background: #007bff; height: 100%;">
+	<div id="app" style="height: 100%; background: url(images/bg-epca.png) #007bff no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 			<div class="container">
 				<a class="navbar-brand kathen" href="{{ route('home') }}">
